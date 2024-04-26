@@ -10,7 +10,7 @@ const ColorModeSwitch = () => {
         isChecked={colorMode === "dark"}
         onChange={toggleColorMode}
       />
-      <Text _firstLetter={{ textTransform: "uppercase" }}>
+      <Text _firstLetter={{ textTransform: "uppercase" }} whiteSpace="nowrap">
         {colorMode + " Mode"}
       </Text>
     </HStack>
