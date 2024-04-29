@@ -1,6 +1,7 @@
 import {
   Button,
   HStack,
+  Heading,
   Image,
   Link,
   List,
@@ -24,36 +25,44 @@ const GenreList = ({ onSelectGenre, selectedGenre }: Props) => {
 
   if (error) return null;
   return (
-    <List>
-      {isLoading &&
-        genreID.map((genre) => (
-          <ListItem key={genre} paddingY="5px">
+    <>
+      <Heading fontSize="2xl" marginBottom={3}>
+        Genres
+      </Heading>
+      <List>
+        {isLoading &&
+          genreID.map((genre) => (
+            <ListItem key={genre} paddingY="5px">
+              <HStack>
+                <Skeleton boxSize="32px" borderRadius={8} />{" "}
+                <SkeletonText width={20} />
+              </HStack>
+            </ListItem>
+          ))}
+        {data.map((genre) => (
+          <ListItem key={genre.id} paddingY="5px">
             <HStack>
-              <Skeleton boxSize="32px" borderRadius={8} />{" "}
-              <SkeletonText width={20} />
+              <Image
+                boxSize="32px"
+                borderRadius={8}
+                objectFit="cover"
+                src={getCroppedImageUrl(genre.image_background)}
+              />
+              <Button
+                whiteSpace="normal"
+                textAlign="left"
+                fontWeight={genre.id === selectedGenre?.id ? "bold" : "normal"}
+                onClick={() => onSelectGenre(genre)}
+                fontSize="lg"
+                variant="Link"
+              >
+                {genre.name}
+              </Button>
             </HStack>
           </ListItem>
         ))}
-      {data.map((genre) => (
-        <ListItem key={genre.id} paddingY="5px">
-          <HStack>
-            <Image
-              boxSize="32px"
-              borderRadius={8}
-              src={getCroppedImageUrl(genre.image_background)}
-            />
-            <Button
-              fontWeight={genre.id === selectedGenre?.id ? "bold" : "normal"}
-              onClick={() => onSelectGenre(genre)}
-              fontSize="lg"
-              variant="Link"
-            >
-              {genre.name}
-            </Button>
-          </HStack>
-        </ListItem>
-      ))}
-    </List>
+      </List>
+    </>
   );
 };
 
